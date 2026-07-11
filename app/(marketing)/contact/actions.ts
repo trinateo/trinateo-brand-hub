@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { sendEnquiryNotification } from "@/lib/email";
 
 export interface ContactFormState {
   status: "idle" | "success" | "error";
@@ -50,6 +51,15 @@ export async function submitEnquiry(
     if (error) {
       return { status: "error", message: "Something went wrong. Please try again." };
     }
+
+    await sendEnquiryNotification({
+      visitorName: visitor_name,
+      visitorEmail: visitor_email,
+      visitorCompany: visitor_company || null,
+      visitorRole: visitor_role || null,
+      message,
+      howCanIHelp: how_can_i_help || null,
+    });
 
     return { status: "success", visitorName: visitor_name };
   } catch {

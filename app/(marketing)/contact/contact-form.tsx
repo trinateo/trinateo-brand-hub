@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { submitEnquiry, type ContactFormState } from "./actions";
 
@@ -19,8 +20,15 @@ export function ContactForm({
       <div className="rounded-lg border border-green-200 bg-green-50 p-8 text-center">
         <h2 className="text-lg font-semibold text-green-900">Thank you, {state.visitorName}!</h2>
         <p className="text-sm text-green-800 mt-2">
-          Your enquiry has been received. Trina will be in touch with you soon.
+          Your enquiry has been received. Trina will personally review it and be in touch with
+          you soon.
         </p>
+        <Link
+          href="/"
+          className="inline-block mt-6 text-sm font-medium text-green-900 hover:underline"
+        >
+          &larr; Back to home
+        </Link>
       </div>
     );
   }

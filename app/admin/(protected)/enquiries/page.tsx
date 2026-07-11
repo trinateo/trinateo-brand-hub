@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import type { Enquiry, EnquiryStatus } from "@/lib/types";
 import { updateEnquiryStatus } from "./actions";
+import { NotesForm } from "./notes-form";
 
 export const metadata: Metadata = { title: "Enquiries" };
 export const revalidate = 0;
@@ -87,6 +88,7 @@ export default async function AdminEnquiriesPage() {
               <p className="text-xs text-neutral-400 mt-3">
                 {new Date(enquiry.created_at).toLocaleString()}
               </p>
+              <NotesForm id={enquiry.id} adminNotes={enquiry.admin_notes} />
             </article>
           ))}
         </div>

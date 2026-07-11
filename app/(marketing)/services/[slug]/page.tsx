@@ -25,12 +25,21 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = await getService(slug);
   if (!service) return { title: "Service not found" };
+
+  const supabase = await createClient();
+  const { data: profile } = await supabase
+    .from("profile")
+    .select("headshot_url")
+    .limit(1)
+    .maybeSingle();
+
   return {
     title: service.title,
     description: service.summary,
     openGraph: {
       title: service.title,
       description: service.summary,
+      images: profile?.headshot_url ? [{ url: profile.headshot_url }] : undefined,
     },
   };
 }
