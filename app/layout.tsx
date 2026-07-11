@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Nav } from "@/components/nav";
+import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "vibe-stack-supabase",
-  description: "Next.js + Supabase starter",
+  title: {
+    default: "Trina Teo — Executive Coach & Leadership Strategist",
+    template: "%s | Trina Teo",
+  },
+  description:
+    "Trina Teo is an executive coach and leadership strategist helping CEOs and HR leaders build thriving organisations.",
 };
 
 export default function RootLayout({
@@ -13,7 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased text-neutral-900">
+        <Nav />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
