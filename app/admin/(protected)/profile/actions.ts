@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { getAdminUser } from "@/lib/admin/auth";
 
 export interface ProfileFormState {
   error?: string;
@@ -25,13 +26,14 @@ export async function updateProfile(
   if (!full_name) return { error: "Full name is required." };
 
   const supabase = await createClient();
+  const user = await getAdminUser();
   const { data: existing } = await supabase.from("profile").select("id").limit(1).maybeSingle();
 
   const fields = { full_name, tagline, bio, headshot_url, linkedin_url, expertise_tags };
 
   const { error } = existing
     ? await supabase.from("profile").update(fields).eq("id", existing.id)
-    : await supabase.from("profile").insert(fields);
+    : await supabase.from("profile").insert({ ...fields, user_id: user?.id });
 
   if (error) return { error: "Something went wrong. Please try again." };
 

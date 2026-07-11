@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getAdminUser } from "@/lib/admin/auth";
 
 export interface ResourceFormState {
   error?: string;
@@ -27,6 +28,7 @@ export async function createResource(
   if (!fields.title) return { error: "Title is required." };
 
   const supabase = await createClient();
+  const user = await getAdminUser();
   const { data: maxRow } = await supabase
     .from("resources")
     .select("sort_order")
@@ -36,7 +38,7 @@ export async function createResource(
 
   const { error } = await supabase
     .from("resources")
-    .insert({ ...fields, sort_order: (maxRow?.sort_order ?? 0) + 1 });
+    .insert({ ...fields, user_id: user?.id, sort_order: (maxRow?.sort_order ?? 0) + 1 });
 
   if (error) return { error: "Something went wrong. Please try again." };
 

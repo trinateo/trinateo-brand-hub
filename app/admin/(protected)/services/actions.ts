@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getAdminUser } from "@/lib/admin/auth";
 import type { ServiceOffer } from "@/lib/types";
 
 export interface ServiceFormState {
@@ -39,6 +40,7 @@ export async function createService(
   if (!fields.summary) return { error: "Summary is required." };
 
   const supabase = await createClient();
+  const user = await getAdminUser();
   const { data: maxRow } = await supabase
     .from("service_offers")
     .select("sort_order")
@@ -48,6 +50,7 @@ export async function createService(
 
   const { error } = await supabase.from("service_offers").insert({
     ...fields,
+    user_id: user?.id,
     sort_order: (maxRow?.sort_order ?? 0) + 1,
   });
 

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getAdminUser } from "@/lib/admin/auth";
 
 export interface TestimonialFormState {
   error?: string;
@@ -29,6 +30,7 @@ export async function createTestimonial(
   if (!fields.quote) return { error: "Quote is required." };
 
   const supabase = await createClient();
+  const user = await getAdminUser();
   const { data: maxRow } = await supabase
     .from("testimonials")
     .select("sort_order")
@@ -38,7 +40,7 @@ export async function createTestimonial(
 
   const { error } = await supabase
     .from("testimonials")
-    .insert({ ...fields, sort_order: (maxRow?.sort_order ?? 0) + 1 });
+    .insert({ ...fields, user_id: user?.id, sort_order: (maxRow?.sort_order ?? 0) + 1 });
 
   if (error) return { error: "Something went wrong. Please try again." };
 

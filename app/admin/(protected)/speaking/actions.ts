@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getAdminUser } from "@/lib/admin/auth";
 
 export interface SpeakingFormState {
   error?: string;
@@ -29,7 +30,8 @@ export async function createSpeaking(
   if (!fields.event_name) return { error: "Event name is required." };
 
   const supabase = await createClient();
-  const { error } = await supabase.from("speaking_engagements").insert(fields);
+  const user = await getAdminUser();
+  const { error } = await supabase.from("speaking_engagements").insert({ ...fields, user_id: user?.id });
 
   if (error) return { error: "Something went wrong. Please try again." };
 

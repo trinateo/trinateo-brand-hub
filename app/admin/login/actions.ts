@@ -1,30 +1,26 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import {
-  createAdminSession,
-  isPassphraseConfigured,
-  verifyPassphrase,
-} from "@/lib/admin/auth";
+import { createClient } from "@/lib/supabase/server";
 
 export interface LoginState {
   error?: string;
 }
 
 export async function login(_prevState: LoginState, formData: FormData): Promise<LoginState> {
-  if (!isPassphraseConfigured()) {
-    return { error: "Admin passphrase is not configured. Set ADMIN_PASSPHRASE in Vercel." };
+  const email = String(formData.get("email") ?? "").trim();
+  const password = String(formData.get("password") ?? "");
+
+  if (!email || !password) {
+    return { error: "Email and password are required." };
   }
 
-  const passphrase = String(formData.get("passphrase") ?? "");
-  if (!passphrase) {
-    return { error: "Passphrase is required." };
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    return { error: "Invalid email or password." };
   }
 
-  if (!verifyPassphrase(passphrase)) {
-    return { error: "Incorrect passphrase." };
-  }
-
-  await createAdminSession();
   redirect("/admin");
 }
