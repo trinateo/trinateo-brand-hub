@@ -1,0 +1,407 @@
+/*
+Theme Name: TrinaTeo Brand Hub
+Theme URI: https://trinateo.com
+Author: Trina Teo
+Description: Personal brand site for TrinaTeo.com — services, case studies, testimonials, speaking, resources, and an enquiry form. Ported from the original Next.js + Supabase build; all content types are native WordPress custom post types so everything is editable from wp-admin with no plugins required.
+Version: 1.0.0
+Requires at least: 6.0
+Requires PHP: 7.4
+Text Domain: trinateo-brand-hub
+*/
+
+:root {
+  --tt-neutral-900: #171717;
+  --tt-neutral-700: #404040;
+  --tt-neutral-600: #525252;
+  --tt-neutral-500: #737373;
+  --tt-neutral-400: #a3a3a3;
+  --tt-neutral-300: #d4d4d4;
+  --tt-neutral-200: #e5e5e5;
+  --tt-neutral-100: #f5f5f5;
+  --tt-neutral-50: #fafafa;
+  --tt-blue-600: #2563eb;
+  --tt-green-50: #f0fdf4;
+  --tt-green-200: #bbf7d0;
+  --tt-green-700: #15803d;
+  --tt-green-800: #166534;
+  --tt-green-900: #14532d;
+  --tt-red-600: #dc2626;
+  --tt-max-width: 64rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--tt-neutral-900);
+  -webkit-font-smoothing: antialiased;
+  background: #fff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.tt-container {
+  max-width: var(--tt-max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.tt-container--wide {
+  max-width: 72rem;
+}
+
+.tt-container--narrow {
+  max-width: 42rem;
+}
+
+/* Header */
+.tt-header {
+  border-bottom: 1px solid var(--tt-neutral-200);
+}
+.tt-header__inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tt-header__logo {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.tt-nav {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--tt-neutral-600);
+  flex-wrap: wrap;
+}
+.tt-nav a:hover {
+  color: var(--tt-neutral-900);
+}
+
+/* Footer */
+.tt-footer {
+  border-top: 1px solid var(--tt-neutral-200);
+  margin-top: 6rem;
+}
+.tt-footer__inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--tt-neutral-500);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.tt-footer__inner a:hover {
+  color: var(--tt-neutral-900);
+}
+
+/* Hero */
+.tt-hero {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 4rem;
+}
+.tt-hero__eyebrow {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--tt-blue-600);
+  margin-bottom: 0.75rem;
+}
+.tt-hero__title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  max-width: 48rem;
+  margin: 0;
+}
+.tt-hero__actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.tt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.tt-btn--primary {
+  background: var(--tt-neutral-900);
+  color: #fff;
+}
+.tt-btn--primary:hover {
+  background: var(--tt-neutral-700);
+}
+.tt-btn--secondary {
+  border-color: var(--tt-neutral-300);
+  background: #fff;
+  color: var(--tt-neutral-900);
+}
+.tt-btn--secondary:hover {
+  border-color: var(--tt-neutral-400);
+}
+.tt-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Sections */
+.tt-section {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  border-top: 1px solid var(--tt-neutral-200);
+}
+.tt-section--first {
+  border-top: none;
+}
+.tt-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.tt-h1 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+}
+.tt-h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.tt-lede {
+  color: var(--tt-neutral-500);
+  margin: 0 0 3rem;
+}
+.tt-empty {
+  color: var(--tt-neutral-500);
+}
+
+/* Grids & cards */
+.tt-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .tt-grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .tt-grid--3 { grid-template-columns: repeat(3, 1fr); }
+}
+.tt-card {
+  display: block;
+  border: 1px solid var(--tt-neutral-200);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition: border-color 0.15s;
+}
+.tt-card:hover {
+  border-color: var(--tt-neutral-400);
+}
+.tt-card__title {
+  font-weight: 500;
+  margin: 0 0 0.5rem;
+}
+.tt-card__body {
+  font-size: 0.875rem;
+  color: var(--tt-neutral-500);
+  margin: 0;
+}
+.tt-card__cta {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--tt-blue-600);
+}
+
+.tt-quote-card {
+  border-radius: 0.5rem;
+  background: var(--tt-neutral-50);
+  padding: 1.5rem;
+}
+.tt-quote-card blockquote {
+  font-size: 0.875rem;
+  color: var(--tt-neutral-700);
+  margin: 0;
+}
+.tt-quote-card figcaption {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.tt-quote-card figcaption span {
+  display: block;
+  font-weight: 400;
+  color: var(--tt-neutral-500);
+}
+
+/* Tags / badges */
+.tt-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: var(--tt-neutral-100);
+  color: var(--tt-neutral-700);
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  margin: 0 0.5rem 0.5rem 0;
+}
+.tt-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  padding: 0.125rem 0.6rem;
+}
+.tt-badge--new { background: #dbeafe; color: #1d4ed8; }
+.tt-badge--reviewed { background: #fef3c7; color: #b45309; }
+.tt-badge--responded { background: var(--tt-green-50); color: var(--tt-green-700); }
+.tt-badge--published { background: var(--tt-green-50); color: var(--tt-green-700); }
+.tt-badge--draft { background: var(--tt-neutral-100); color: var(--tt-neutral-500); }
+
+/* Detail pages (service, about) */
+.tt-detail {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+.tt-detail__back {
+  font-size: 0.875rem;
+  color: var(--tt-neutral-500);
+}
+.tt-detail__back:hover {
+  color: var(--tt-neutral-900);
+}
+.tt-detail__title {
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 1rem 0;
+}
+.tt-detail__summary {
+  font-size: 1.125rem;
+  color: var(--tt-neutral-600);
+  margin: 0 0 2.5rem;
+}
+.tt-detail__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tt-neutral-500);
+  margin: 0 0 0.5rem;
+}
+.tt-detail p {
+  color: var(--tt-neutral-700);
+  line-height: 1.65;
+}
+
+/* About */
+.tt-about__top {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.tt-about__headshot {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 1px solid var(--tt-neutral-200);
+}
+
+/* Forms */
+.tt-field {
+  margin-bottom: 1.25rem;
+}
+.tt-field label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+.tt-field input[type="text"],
+.tt-field input[type="email"],
+.tt-field input[type="url"],
+.tt-field input[type="password"],
+.tt-field input[type="date"],
+.tt-field select,
+.tt-field textarea {
+  width: 100%;
+  border: 1px solid var(--tt-neutral-300);
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+}
+.tt-field-row {
+  display: grid;
+  gap: 1.25rem;
+}
+@media (min-width: 640px) {
+  .tt-field-row { grid-template-columns: 1fr 1fr; }
+}
+.tt-error {
+  color: var(--tt-red-600);
+  font-size: 0.875rem;
+  margin: 0.25rem 0;
+}
+.tt-confirmation {
+  border: 1px solid var(--tt-green-200);
+  background: var(--tt-green-50);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+}
+.tt-confirmation h2 {
+  color: var(--tt-green-900);
+  margin: 0 0 0.5rem;
+}
+.tt-confirmation p {
+  color: var(--tt-green-800);
+  font-size: 0.875rem;
+}
+
+/* Admin: enquiry meta box */
+.tt-admin-meta label {
+  display: block;
+  font-weight: 600;
+  margin: 0.75rem 0 0.25rem;
+}
+.tt-admin-meta textarea {
+  width: 100%;
+}
